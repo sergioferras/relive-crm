@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = process.env.RELIVE_API || 'http://localhost:8080'
+const URL = process.env.RELIVE_API || 'https://relive-api.herokuapp.com'
 
 const handleHTTPRequestError = error => {
     if (error.response) {
