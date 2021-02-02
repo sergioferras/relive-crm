@@ -18,6 +18,7 @@ function ScrollToTop() { /* Scroll to top of page everything there is a navigati
     return null
 }
 
+
 export default function App() {
     return (
         <MuiThemeProvider theme={themeRelive}>
