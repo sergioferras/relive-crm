@@ -203,13 +203,13 @@ export default function SubmitProp(props) {
                             Loading
                         </Button>
                     </Grid> */}
-                    {step < 2 &&
+                    {/* {step < 2 &&
                         <Grid item xs={12} sm={10}>
                             <Button variant="contained" color="primary" onClick={() => setStep(step + 1)}>
                                 Seguinte
                             </Button>
                         </Grid>
-                    }
+                    } */}
                 </Grid>
             }
         </>

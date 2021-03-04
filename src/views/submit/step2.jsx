@@ -17,8 +17,6 @@ export default function Step2(props) {
 
     const formatCoordinates = coordinates.replace(/,/g, "%2C")
 
-    
-
     return (
         <div style={{ display: step !== 2 ? 'none' : 'inherit' }}>
             <Typography variant="h4" component="h4">
