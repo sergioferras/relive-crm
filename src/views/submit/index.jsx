@@ -114,14 +114,22 @@ export default function SubmitProp(props) {
     useEffect(() => {
         axios.get('/api/imoveis/crm/' + ID)
             .then(res => {
-                const { tipology } = res.data
+                const { tipology, coordinates } = res.data
                 let bedrooms = undefined
                 if (tipology) {
                     const aux = tipology.replace('T', '')
                     bedrooms = parseInt(aux)
                     console.log(bedrooms)
                 }
-                setData({ ...res.data, ID, bedrooms: bedrooms })
+                let newCoordinates = coordinates
+                if (coordinates) {
+                    const aux = coordinates.split(",")
+                    newCoordinates = {
+                        latitude: aux[0],
+                        longitude: aux[1]
+                    }
+                }
+                setData({ ...res.data, ID, bedrooms: bedrooms, coordinates: newCoordinates })
                 setLoading(false)
             })
             .catch(err => {
