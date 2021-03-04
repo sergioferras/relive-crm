@@ -122,13 +122,14 @@ export default function SubmitProp(props) {
                     console.log(bedrooms)
                 }
                 let newCoordinates = coordinates
-                if (coordinates) {
+                /* if (coordinates) {
                     const aux = coordinates.split(",")
                     newCoordinates = {
                         latitude: aux[0],
                         longitude: aux[1]
                     }
-                }
+                    // newCoordinates = [coordinates]
+                } */
                 setData({ ...res.data, ID, bedrooms: bedrooms, coordinates: newCoordinates })
                 setLoading(false)
             })
@@ -164,6 +165,7 @@ export default function SubmitProp(props) {
     const updateSheet = () => {
         /* PUT request to BE to change Sheet with CORS */
         setLoading(true)
+        console.log(data)
         axios.put('/api/imoveis/crm/' + ID, { data })
             .then(res => {
                 setLoading(false)
@@ -201,13 +203,13 @@ export default function SubmitProp(props) {
                             Loading
                         </Button>
                     </Grid> */}
-                    {/* {step < 2 &&
+                    {step < 2 &&
                         <Grid item xs={12} sm={10}>
                             <Button variant="contained" color="primary" onClick={() => setStep(step + 1)}>
                                 Seguinte
                             </Button>
                         </Grid>
-                    } */}
+                    }
                 </Grid>
             }
         </>
