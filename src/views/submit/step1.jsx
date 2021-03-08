@@ -13,7 +13,7 @@ import CustomizedSelects from "../../components/Select"
 export default function Step1(props) {
 
     const { loading, data, changeData, updateDataFields, changeStep } = props
-    const { constructionYear, conservation, energyClass, nAndares, nElevador, type, slope, lote = 0, areaUtil = 0, areaBrutaP = 0, areaBrutaD = 0, areaLote = 0, features } = data
+    const { constructionYear, conservation, energyClass, nAndares, nElevador, type, slope, lote = 0, areaUtil = 0, areaBrutaP = 0, areaBrutaD = 0, features } = data
     const [err, setErr] = useState('')
 
     const propType = type === 'Escritório' ? 87 : type === 'Loja' ? 91 : type === 'Terreno' ? 194 : type === 'Prédio' ? 192 : 34
@@ -31,7 +31,7 @@ export default function Step1(props) {
 
     useEffect(() => { /* Clean Error if there is a change in title */
         setErr('')
-    }, [constructionYear, conservation, energyClass, type, slope, lote, areaUtil, areaBrutaP, areaBrutaD, areaLote, features]
+    }, [constructionYear, conservation, energyClass, type, slope, lote, areaUtil, areaBrutaP, areaBrutaD, features]
     )
 
     const validate = (e) => {
@@ -53,18 +53,20 @@ export default function Step1(props) {
         let params = {}
 
         if (propType === 194) { /* Terreno */
-            const slope = e.target.slope.value
-            const lote = e.target.lote.value
+            const declive = e.target.slope.value
+            const areaLote = e.target.lote.value
 
-            if (!slope)
+            console.log(declive, areaLote)
+
+            if (!declive)
                 return setErr('Declive obrigatório.')
-            if (!lote)
+            if (!areaLote || areaLote == 0)
                 return setErr('Área do lote obrigatória.')
 
             params = {
                 ...params,
-                slope,
-                lote
+                slope: declive,
+                lote: areaLote
             }
         }
 
@@ -77,11 +79,12 @@ export default function Step1(props) {
             const areaBrutaD = e.target.areaBrutaD.value
 
             if (type === 'Moradia') {
-                if (!e.target.lote.value)
+                const arealote = e.target.lote.value
+                if (!arealote || arealote == 0)
                     return setErr('Área do lote obrigatória.')
                 params = {
                     ...params,
-                    lote: e.target.lote.value
+                    lote: arealote
                 }
             }
 
@@ -93,6 +96,8 @@ export default function Step1(props) {
                 return setErr('Classe energética obrigatória.')
             if (!areaUtil || areaUtil == 0)
                 return setErr('Área útil obrigatória.')
+            if (!areaBrutaP || areaBrutaP == 0)
+                return setErr('Área bruta privativa obrigatória.')
 
             params = {
                 ...params,
@@ -201,7 +206,7 @@ export default function Step1(props) {
                 {propType !== 194 &&
                     <Grid item xs={12} sm={6} lg={3}>
                         <Typography variant="body1" component="p">
-                            Ano de construção
+                            Ano de construção*
                     </Typography>
                         <InputBase
                             onChange={updateInputData}
@@ -220,7 +225,7 @@ export default function Step1(props) {
                 {propType !== 194 &&
                     <Grid item xs={12} sm={6} lg={3}>
                         <Typography variant="body1" component="p">
-                            Estado Conservação
+                            Estado Conservação*
                     </Typography>
                         <CustomizedSelects loading={loading} updateData={updateData} name='conservation' val={conservation} options={[
                             { val: 'Bom', label: 'Bom' },
@@ -232,7 +237,7 @@ export default function Step1(props) {
                 {propType !== 194 &&
                     <Grid item xs={12} sm={6} lg={3}>
                         <Typography variant="body1" component="p">
-                            Classe Energética
+                            Classe Energética*
                     </Typography>
                         <CustomizedSelects loading={loading} updateData={updateData} name='energyClass' val={energyClass} options={[
                             { val: 'Em trâmite', label: 'Em trâmite' },
@@ -345,9 +350,9 @@ export default function Step1(props) {
                     <Grid item xs={12} sm={4}>
                         <Tooltip placement="top-start" title={<h3>Superfície total do imóvel, incluindo a espessura das paredes interiores e paredes exteriores</h3>}>
                             <Typography variant="body1" component="p">
-                                Bruta privativa <HelpOutlineIcon color="primary" fontSize="small" />
+                                Bruta privativa* <HelpOutlineIcon color="primary" fontSize="small" />
                             </Typography>
-                         </Tooltip>
+                        </Tooltip>
                         <InputBase
                             onChange={updateInputData}
                             defaultValue={areaBrutaP}
